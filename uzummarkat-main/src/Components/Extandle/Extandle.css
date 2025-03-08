@@ -83,9 +83,15 @@
   font-weight: 500;
   color: #1f2026;
 }
-.product .image img {
-  width: 32px;
-  height: 32px;
+.product .image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #dee0e5;
+  width: 35px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
 }
 .wrapper-image {
   margin: auto;

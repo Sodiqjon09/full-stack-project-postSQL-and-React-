@@ -5,6 +5,7 @@ import Home from "./Components/Home/Home";
 import Signup from "./Components/Signup/Signup";
 import Wishes from "./pages/Wishes/Wishes";
 import { LanguageProvider } from "./LanguageSelector"; // Import the LanguageProvider
+import Basket from "./Components/Basket/Basket";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/wishes" element={<Wishes />} />
+          <Route path="/basket" element={<Basket />} />
         </Routes>
       </BrowserRouter>
     </LanguageProvider>

@@ -40,7 +40,7 @@ function Suggestion() {
           <FaRegHeart />
           <span>{currentLanguage.qualifiers}</span>
         </Link>
-        <Link to="/">
+        <Link to="/basket">
           <CiShoppingBasket />
           <span>{currentLanguage.basket}</span>
         </Link>
