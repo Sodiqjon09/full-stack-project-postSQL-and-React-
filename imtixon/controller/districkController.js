@@ -1,4 +1,4 @@
-const { District,Region } = require("../models");
+const { District, Region } = require("../models");
 const { validateDistrict } = require("../validations/districkValidation");
 
 exports.createdistristType = async (req, res) => {

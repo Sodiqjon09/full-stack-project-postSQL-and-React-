@@ -5,6 +5,7 @@ const sequelize = require("./config/databes");
 const venueTypeRoutes = require("./routes/venueTypeRoutes");
 const districkRouter = require("./routes/districkRouter");
 const regionRouter = require("./routes/regionRouter");
+const datasRouter = require("./routes/datasRouter");
 
 const setupSwagger = require("./swagger/swagger");
 dotenv.config();
@@ -21,7 +22,7 @@ app.use(
 app.use("/api", venueTypeRoutes);
 app.use("/api", regionRouter);
 app.use("/api", districkRouter);
-
+app.use("/api", datasRouter);
 
 setupSwagger(app);
 
