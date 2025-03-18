@@ -64,6 +64,25 @@ function Extandle() {
     setLikes(updatedLikes);
   };
 
+  // Yangi funksiya: Savatga mahsulot qo‘shish
+  const toggleBasket = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/basket`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ basket_id: id }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Savatga qo‘shishda xatolik yuz berdi.");
+      }
+
+      console.log(`Mahsulot ${id} savatga qo‘shildi.`);
+    } catch (error) {
+      console.error("Error adding item to basket:", error);
+    }
+  };
+
   const categories = data.reduce((acc, item) => {
     if (!acc[item.category]) acc[item.category] = [];
     acc[item.category].push(item);
@@ -79,6 +98,7 @@ function Extandle() {
           items={items}
           likes={likes}
           toggleLike={toggleLike}
+          toggleBasket={toggleBasket}
         />
       ))}
     </div>

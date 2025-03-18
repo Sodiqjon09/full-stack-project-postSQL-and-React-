@@ -1,7 +1,7 @@
 .product-card {
   margin: 0 auto;
   background-color: white;
-  margin-top: 120px;
+  margin-top: 20px;
   padding: 0 80px;
 }
 .header {
@@ -223,7 +223,7 @@
   justify-content: space-between;
   font-size: 16px;
   color: #555;
-  margin-bottom: 8px;
+  margin-top: 14px;
 }
 
 .order-price {
@@ -261,8 +261,14 @@
   border-radius: 6px;
   cursor: pointer;
   transition: background 0.2s ease;
+  margin-top: 30px;
 }
 
 .order-button:hover {
   background: #8328fb;
+}
+.flex {
+  display: flex;
+  justify-content: center;
+  gap: 100px;
 }

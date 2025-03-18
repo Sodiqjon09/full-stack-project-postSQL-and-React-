@@ -102,7 +102,10 @@ function Wishes() {
               <img className="image" src={product.image} alt={product.title} />
               <div className="like">
                 {likedItems[product.id] ? (
-                  <FaHeart color="red" onClick={() => toggleLike(product.id)} />
+                  <FaHeart
+                    color="#7F4DFF"
+                    onClick={() => toggleLike(product.id)}
+                  />
                 ) : (
                   <CiHeart onClick={() => toggleLike(product.id)} />
                 )}

@@ -1,4 +1,4 @@
-const { Basket, basket } = require("../models");
+const { Basket } = require("../models");
 const { validateBasket } = require("../validations/basketValidation");
 
 exports.creatBasketype = async (req, res) => {
@@ -6,9 +6,18 @@ exports.creatBasketype = async (req, res) => {
   if (error) return res.status(400).send(error.details[0].message);
 
   try {
-    const basket = await Basket.create(req.body);
-    res.status(201).send(basket);
+    const existingLiked = await Basket.findOne({
+      where: { basket_id: req.body.basket_id },
+    });
+    if (existingLiked) {
+      return res.status(400).json({ message: "Bu basket_id allaqachon mavjud!" });
+    }
+
+    // Yangi liked qo‘shish
+    const newLiked = await Basket.create(req.body);
+    res.status(201).send(newLiked);
   } catch (error) {
+    console.error("Error creating liked:", error);
     res.status(500).send(error);
   }
 };

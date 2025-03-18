@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     basket_id: {
       type: DataTypes.INTEGER,
       unique: true,
+      allowNull: false,
     },
   });
 
