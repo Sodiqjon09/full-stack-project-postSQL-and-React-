@@ -1,80 +1,80 @@
 import React, { useState } from "react";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
-import { FaFacebook } from "react-icons/fa";
 
-import {
-  signInWithEmailAndPassword,
-  GoogleAuthProvider,
-  signInWithPopup,
-} from "firebase/auth";
 function Signup() {
-  const [error, setError] = useState(false);
+  const [name, setName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
-  const auth = getAuth();
 
-  const handleSubmit = () => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed up
-        const user = userCredential.user;
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ..
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const userData = { name, lastName, email, password };
+
+    try {
+      const response = await fetch("http://localhost:3000/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
       });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data.message || "Ro‘yxatdan o‘tishda xatolik yuz berdi"
+        );
+      }
+
+      alert("Ro‘yxatdan o‘tish muvaffaqiyatli!");
+      navigate("/home");
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
-  const handleGoogleSignIn = () => {
-    const provider = new GoogleAuthProvider();
-
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        // Signed in with Google
-        const user = result.user;
-        console.log(user);
-        navigate("/");
-      })
-      .catch((error) => {
-        setError(true);
-        console.error("Google sign-in error:", error.message);
-      });
-  };
   return (
-    <div className="login">
-      <div className="loginClass">
-        <span className="kirish">ro'yxatdan o'tish</span>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="email"
-            placeholder="Enter your email address"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="Enter your password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <button type="submit">ro'yxatdan o'tish</button>
-        </form>
-        <hr />
-        <div className="signin">
-          <Link to="/login">Kirish</Link>
-        </div>
-
-        <div className="icon">
-          <button onClick={handleGoogleSignIn}>
-            <FcGoogle size={25} />
-            Continue with Google
-          </button>
-        </div>
-      </div>
+    <div className="signup">
+      <h2>Ro‘yxatdan o‘tish</h2>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Ism"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
+        <input
+          type="text"
+          placeholder="Familiya"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+          required
+        />
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value.toLowerCase())} // Kichik harfga aylantiramiz
+          required
+        />
+        <input
+          type="password"
+          placeholder="Parol"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <button type="submit">Ro‘yxatdan o‘tish</button>
+        {error && <p style={{ color: "red" }}>{error}</p>}
+      </form>
+      <Link to="/login">Kirish</Link>
     </div>
   );
 }

@@ -1,20 +1,19 @@
 const express = require("express");
 const router = express.Router();
-const regionController = require("../controller/regionController");
-
+const SlideController = require("../controller/SlideController");
 /**
  * @swagger
  * tags:
- *   name: region
- *   description: region management
+ *   name: slide
+ *   description: slide management
  */
 
 /**
  * @swagger
- * /api/region:
+ * /api/slide:
  *   post:
- *     tags: [region]
- *     summary: Create a new region
+ *     tags: [slide]
+ *     summary: Create a new slide
  *     requestBody:
  *       required: true
  *       content:
@@ -22,70 +21,72 @@ const regionController = require("../controller/regionController");
  *           schema:
  *             type: object
  *             properties:
- *               name:
+ *               image:
  *                 type: string
  *     responses:
  *       201:
- *         description: User created
+ *         description: slide created
  *       400:
  *         description: Invalid input
  *       500:
  *         description: Server error
  */
-router.post("/region", regionController.createRegion);
-/**
- * @swagger
- * /api/region:
- *   get:
- *     tags: [region]
- *     summary: Get all region
- *     responses:
- *       200:
- *         description: List of region
- *       500:
- *         description: Server error
- */
-router.get("/region", regionController.getRegion);
+router.post("/slide", SlideController.createSlideType);
 
 /**
  * @swagger
- * /api/region/{id}:
+ * /api/slide:
  *   get:
- *     tags: [region]
- *     summary: Update user by venue_type
+ *     tags: [slide]
+ *     summary: Get all slide
+ *     responses:
+ *       200:
+ *         description: List of slide
+ *       500:
+ *         description: Server error
+ */
+
+router.get("/slide", SlideController.getSlideType);
+
+/**
+ * @swagger
+ * /api/slide/{id}:
+ *   get:
+ *     tags: [slide]
+ *     summary: Update user by slide
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: integer
  *         required: true
- *         description: region ID
+ *         description: slide ID
  *     responses:
  *       200:
- *         description: region updated
+ *         description: slide updated
  *       400:
  *         description: Invalid input
  *       404:
- *         description: region not found
+ *         description: slide not found
  *       500:
  *         description: Server error
  */
 
-router.get("/region/:id", regionController.getRegionById);
+router.get("/slide/:id", SlideController.getSlideTypeById);
 
 /**
  * @swagger
- * /api/region/{id}:
+ * /api/slide/{id}:
  *   put:
- *     tags: [region]
- *     summary: Update region by ID
+ *     tags: [slide]
+ *     summary: Update slide by ID
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: integer
  *         required: true
- *         description: region ID
+ *         description: slide ID
  *     requestBody:
  *       required: true
  *       content:
@@ -93,42 +94,40 @@ router.get("/region/:id", regionController.getRegionById);
  *           schema:
  *             type: object
  *             properties:
- *               name:
+ *               image:
  *                 type: string
  *     responses:
  *       200:
- *         description: region updated
+ *         description: slide updated
  *       400:
  *         description: Invalid input
  *       404:
- *         description: region not found
+ *         description: slide not found
  *       500:
  *         description: Server error
  */
-router.put("/region/:id", regionController.updateRegion);
-
+router.put("/slide/:id", SlideController.updateSlideType);
 /**
  * @swagger
- * /api/region/{id}:
+ * /api/slide/{id}:
  *   delete:
- *     tags: [region]
- *     summary: Delete region by ID
+ *     tags: [slide]
+ *     summary: Delete slide by ID
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: integer
  *         required: true
- *         description: region ID
+ *         description: slide ID
  *     responses:
  *       204:
- *         description: region deleted
+ *         description: slide deleted
  *       404:
- *         description: region not found
+ *         description: slide not found
  *       500:
  *         description: Server error
  */
 
-router.delete("/region/:id", regionController.deleteRegion);
-
+router.delete("/slide/:id", SlideController.deleteDataType);
 module.exports = router;

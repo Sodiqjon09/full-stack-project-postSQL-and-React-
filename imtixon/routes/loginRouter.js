@@ -1,20 +1,20 @@
 const express = require("express");
 const router = express.Router();
-const venueTypeController = require("../controller/venueTypeController");
+const loginController = require("../controller/loginController");
 
 /**
  * @swagger
  * tags:
- *   name: venue_type
- *   description: venue_type management
+ *   name: login
+ *   description: Login management
  */
 
 /**
  * @swagger
- * /api/venuetype:
+ * /api/login:
  *   post:
- *     tags: [venue_type]
- *     summary: Create a new venue_type
+ *     tags: [login]
+ *     summary: Create a new login
  *     requestBody:
  *       required: true
  *       content:
@@ -22,71 +22,74 @@ const venueTypeController = require("../controller/venueTypeController");
  *           schema:
  *             type: object
  *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
  *               name:
+ *                 type: string
+ *               lastName:
  *                 type: string
  *     responses:
  *       201:
- *         description: User created
+ *         description: Login created
  *       400:
  *         description: Invalid input
  *       500:
  *         description: Server error
  */
-router.post("/venuetype", venueTypeController.createVenueType);
+router.post("/login", loginController.createLoginType);
 
 /**
  * @swagger
- * /api/venuetype:
+ * /api/login:
  *   get:
- *     tags: [venue_type]
- *     summary: Get all venue_type
+ *     tags: [login]
+ *     summary: Get all logins
  *     responses:
  *       200:
- *         description: List of venue_type
+ *         description: List of logins
  *       500:
  *         description: Server error
  */
-
-router.get("/venuetype", venueTypeController.getVenueType);
+router.get("/login", loginController.getLoginType);
 
 /**
  * @swagger
- * /api/venuetype/{id}:
+ * /api/login/{id}:
  *   get:
- *     tags: [venue_type]
- *     summary: Update user by venue_type
+ *     tags: [login]
+ *     summary: Get login by ID
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: integer
  *         required: true
- *         description: venue_type ID
+ *         description: Login ID
  *     responses:
  *       200:
- *         description: venue_type updated
- *       400:
- *         description: Invalid input
+ *         description: Login found
  *       404:
- *         description: venue_type not found
+ *         description: Login not found
  *       500:
  *         description: Server error
  */
-router.get("/venuetype/:id", venueTypeController.getVenueTypeById);
+router.get("/login/:id", loginController.getLoginTypeById);
 
 /**
  * @swagger
- * /api/venuetype/{id}:
+ * /api/login/{id}:
  *   put:
- *     tags: [venue_type]
- *     summary: Update venue_type by ID
+ *     tags: [login]
+ *     summary: Update login by ID
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: integer
  *         required: true
- *         description: venue_type ID
+ *         description: Login ID
  *     requestBody:
  *       required: true
  *       content:
@@ -94,42 +97,47 @@ router.get("/venuetype/:id", venueTypeController.getVenueTypeById);
  *           schema:
  *             type: object
  *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
  *               name:
+ *                 type: string
+ *               lastName:
  *                 type: string
  *     responses:
  *       200:
- *         description: venue_type updated
+ *         description: Login updated
  *       400:
  *         description: Invalid input
  *       404:
- *         description: venue_type not found
+ *         description: Login not found
  *       500:
  *         description: Server error
  */
-router.put("/venuetype/:id", venueTypeController.updateVenueType);
+router.put("/login/:id", loginController.updateLoginType);
 
 /**
  * @swagger
- * /api/venuetype/{id}:
+ * /api/login/{id}:
  *   delete:
- *     tags: [venue_type]
- *     summary: Delete venue_type by ID
+ *     tags: [login]
+ *     summary: Delete login by ID
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: integer
  *         required: true
- *         description: venue_type ID
+ *         description: Login ID
  *     responses:
  *       204:
- *         description: venue_type deleted
+ *         description: Login deleted
  *       404:
- *         description: venue_type not found
+ *         description: Login not found
  *       500:
  *         description: Server error
  */
-
-router.delete("/venuetype/:id", venueTypeController.deleteVenueType)
+router.delete("/login/:id", loginController.deleteLoginType);
 
 module.exports = router;

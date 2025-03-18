@@ -1,24 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import DivImage from "../../asset/images/div.image.png";
 import { languages } from "../../data/data";
 import { Link } from "react-scroll";
 import { useLanguage } from "../../LanguageSelector";
 
 function Bottombar() {
+  const [categories, setCategories] = useState([]);
+
   const { language } = useLanguage();
   const currentLanguage = languages[language || "uzb"];
 
-  const types = [
-    { title: currentLanguage.types.electronics, link: "section1" },
-    { title: currentLanguage.types.appliances, link: "section2" },
-    { title: currentLanguage.types.clothing, link: "section3" },
-    { title: currentLanguage.types.footwear, link: "section4" },
-    { title: currentLanguage.types.accessories, link: "section5" },
-    { title: currentLanguage.types.beauty, link: "section6" },
-    { title: currentLanguage.types.health, link: "section7" },
-    { title: currentLanguage.types.home, link: "section8" },
-    { title: currentLanguage.types.construction, link: "section9" },
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/api/datas");
+        const result = await response.json();
+
+        // Har bir kategoriya bo‘yicha faqat bitta mahsulotni olish
+        const uniqueCategories = {};
+        result.forEach((item) => {
+          if (!uniqueCategories[item.category]) {
+            uniqueCategories[item.category] = item;
+          }
+        });
+
+        setCategories(Object.values(uniqueCategories));
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <div className="Bottombar">
@@ -29,13 +41,19 @@ function Bottombar() {
             {currentLanguage.InstallmentPayment}
           </span>
         </Link>
-        {types.map((e, index) => (
-          <Link key={index} smooth={true} duration={500} to={e.link}>
-            {e.title}
+
+        {categories.map((category) => (
+          <Link
+            key={category.id}
+            to={category.category}
+            smooth={true}
+            duration={500}
+          >
+            {category.category}
           </Link>
         ))}
       </div>
-      <select name="" id="">
+      <select>
         <option>{currentLanguage.again}</option>
       </select>
     </div>

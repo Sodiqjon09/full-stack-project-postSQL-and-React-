@@ -1,10 +1,21 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../config/databes");
 
-const VenueType = require("./venueType.model")(sequelize, Sequelize);
-const Region = require("./region.model")(sequelize, Sequelize);
-const District = require("./district.model")(sequelize, Sequelize);
 const Datas = require("./datas.model")(sequelize, Sequelize);
+const Slide = require("./slide.model")(sequelize, Sequelize);
+const Login = require("./login.model")(sequelize, Sequelize);
+const Liked = require("./liked.model")(sequelize, Sequelize);
+const Basket = require("./basket.model")(sequelize, Sequelize);
 
+Datas.associate(sequelize.models);
+Liked.associate(sequelize.models);
+Basket.associate(sequelize.models);
 
-module.exports = { VenueType, Region, District, Datas, sequelize };
+module.exports = {
+  Datas,
+  Slide,
+  Login,
+  Liked,
+  Basket,
+  sequelize,
+};

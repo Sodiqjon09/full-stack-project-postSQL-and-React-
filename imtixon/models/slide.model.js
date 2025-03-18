@@ -1,15 +1,15 @@
 module.exports = (sequelize, DataTypes) => {
-  const VenueType = sequelize.define("venuetype", {
+  const Slide = sequelize.define("slide", {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
     },
-    name: {
+    image: {
       type: DataTypes.STRING,
       allowNull: false,
     },
   });
 
-  return VenueType;
+  return Slide;
 };

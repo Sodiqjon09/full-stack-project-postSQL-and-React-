@@ -1,20 +1,20 @@
 const express = require("express");
 const router = express.Router();
-const districkController = require("../controller/districkController");
+const basketController = require("../controller/basketController");
 
 /**
  * @swagger
  * tags:
- *   name: district
- *   description: district management
+ *   name: basket
+ *   description: basket management
  */
 
 /**
  * @swagger
- * /api/district:
+ * /api/basket:
  *   post:
- *     tags: [district]
- *     summary: Create a new district
+ *     tags: [basket]
+ *     summary: Create a new basket
  *     requestBody:
  *       required: true
  *       content:
@@ -22,74 +22,71 @@ const districkController = require("../controller/districkController");
  *           schema:
  *             type: object
  *             properties:
- *               name:
- *                 type: string
- *               regionId:
+ *               basket_id:
  *                 type: number
  *     responses:
  *       201:
- *         description: district created
+ *         description: number created
  *       400:
  *         description: Invalid input
  *       500:
  *         description: Server error
  */
-router.post("/district", districkController.createdistristType);
+router.post("/basket", basketController.creatBasketype);
 
 /**
  * @swagger
- * /api/district:
+ * /api/basket:
  *   get:
- *     tags: [district]
- *     summary: Get all district
+ *     tags: [basket]
+ *     summary: Get all basket
  *     responses:
  *       200:
- *         description: List of district
+ *         description: List of basket
  *       500:
  *         description: Server error
  */
 
-router.get("/district", districkController.getdistristType);
-
+router.get("/basket", basketController.getBasketType);
 /**
  * @swagger
- * /api/district/{id}:
+ * /api/basket/{id}:
  *   get:
- *     tags: [district]
- *     summary: Update user by district
+ *     tags: [basket]
+ *     summary: Update user by basket
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: integer
  *         required: true
- *         description: district ID
+ *         description: basket ID
  *     responses:
  *       200:
- *         description: district updated
+ *         description: basket updated
  *       400:
  *         description: Invalid input
  *       404:
- *         description: district not found
+ *         description: basket not found
  *       500:
  *         description: Server error
  */
 
-router.get("/district/:id", districkController.getdistristTypeById);
+router.get("/basket/:id", basketController.getBasketTypeById);
 
 /**
  * @swagger
- * /api/district/{id}:
+ * /api/basket/{id}:
  *   put:
- *     tags: [district]
- *     summary: Update district by ID
+ *     tags: [basket]
+ *     summary: Update basket by ID
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: integer
  *         required: true
- *         description: district ID
+ *         description: datas ID
  *     requestBody:
  *       required: true
  *       content:
@@ -97,42 +94,40 @@ router.get("/district/:id", districkController.getdistristTypeById);
  *           schema:
  *             type: object
  *             properties:
- *               name:
- *                 type: string
- *               regionId:
+ *               basket_id:
  *                 type: number
  *     responses:
  *       200:
- *         description: district updated
+ *         description: datas updated
  *       400:
  *         description: Invalid input
  *       404:
- *         description: district not found
+ *         description: datas not found
  *       500:
  *         description: Server error
  */
-router.put("/district/:id", districkController.updatedistristType);
+router.put("/basket/:id", basketController.updateBasketType);
 /**
  * @swagger
- * /api/district/{id}:
+ * /api/basket/{id}:
  *   delete:
- *     tags: [district]
- *     summary: Delete district by ID
+ *     tags: [basket]
+ *     summary: Delete basket by ID
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: integer
  *         required: true
- *         description: district ID
+ *         description: basket ID
  *     responses:
  *       204:
- *         description: district deleted
+ *         description: basket deleted
  *       404:
- *         description: district not found
+ *         description: basket not found
  *       500:
  *         description: Server error
  */
 
-router.delete("/district/:id", districkController.deletedistristType);
+router.delete("/basket/:id", basketController.deleteBasketType);
 module.exports = router;

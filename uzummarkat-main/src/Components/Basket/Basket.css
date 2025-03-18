@@ -1,0 +1,268 @@
+.product-card {
+  margin: 0 auto;
+  background-color: white;
+  margin-top: 120px;
+  padding: 0 80px;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+.header .select-box {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+.select-box .checkbox {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkbox.selected {
+  background-color: #7c3aed;
+  color: white;
+}
+
+.checkbox.unselected {
+  border: 2px solid #d1d5db;
+}
+
+.delivery-info {
+  padding: 1rem;
+  color: #4b5563;
+  font-size: 0.875rem;
+}
+
+.delivery-info .highlight {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.product-details {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.product-details .image-container {
+  width: 6rem;
+  height: 8rem;
+  background-color: #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+}
+.image-container img {
+  width: 6rem;
+  height: 8rem;
+}
+
+.product-details .info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 1rem;
+  gap: 50px;
+}
+
+.info h3 {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: #1f2937;
+}
+
+.info .seller {
+  color: #6b7280;
+  margin-top: 1.5rem;
+}
+
+.info .seller span {
+  color: #374151;
+}
+
+.quantity-control {
+  display: flex;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  width: max-content;
+  height: max-content;
+}
+
+.quantity-control button {
+  padding: 0.25rem 0.75rem;
+  font-size: 1.25rem;
+  color: #6b7280;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.quantity-control button:hover {
+  background-color: #f3f4f6;
+}
+
+.quantity-display {
+  padding: 0.25rem 1rem;
+  border-left: 1px solid #d1d5db;
+  border-right: 1px solid #d1d5db;
+  min-width: 2.5rem;
+  text-align: center;
+}
+
+.price-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 30px;
+}
+
+.price-section .price {
+  text-align: right;
+}
+
+.price .current {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.price .original {
+  color: #9ca3af;
+  text-decoration: line-through;
+  font-size: 0.875rem;
+}
+
+.controls button {
+  display: flex;
+  align-items: center;
+  color: #9ca3af;
+  border: none;
+  cursor: pointer;
+  background: none;
+  width: max-content;
+  height: max-content;
+  gap: 4px;
+}
+.delete-button:hover {
+  color: #6b7280;
+}
+
+.additional-delivery-info {
+  padding: 1rem;
+  border-top: 1px solid #e5e7eb;
+  color: #4b5563;
+}
+.info h3 {
+  font-size: 0.675rem;
+}
+.savat {
+  text-align: center;
+  margin: 0 auto;
+}
+.savat img {
+  height: 128px;
+  width: 128px;
+}
+.savat h1 {
+  font-size: 1.375rem;
+  font-weight: 600;
+  line-height: 1.2em;
+  margin-top: 24px;
+}
+.savat p {
+  font-size: 0.8rem;
+  font-weight: 400;
+  line-height: 1.4em;
+  margin-top: 16px;
+}
+.savat a {
+  background-color: #d0d3d9;
+  border-radius: 4px;
+  color: #0e0e0e;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 400;
+  height: 38px;
+  padding: 9px 14px;
+  text-decoration: none;
+  border: none;
+  line-height: 6;
+}
+.basket {
+  display: flex;
+  justify-content: space-between;
+}
+.order-card {
+  width: 350px;
+  height: 225px;
+  padding: 25px;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #f3f3f3;
+}
+
+.order-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 16px;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.order-price {
+  font-weight: 500;
+  color: #333;
+}
+
+.order-total {
+  font-size: 18px;
+  font-weight: 700;
+  color: #222;
+}
+
+.final-price {
+  font-size: 20px;
+  font-weight: 700;
+  color: black;
+}
+
+.order-savings {
+  text-align: right;
+  color: #16a34a;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+.order-button {
+  width: 100%;
+  padding: 12px;
+  background: #7000ff;
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.order-button:hover {
+  background: #8328fb;
+}

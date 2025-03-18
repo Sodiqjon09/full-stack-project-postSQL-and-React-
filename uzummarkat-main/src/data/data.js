@@ -36,7 +36,6 @@ import img33 from "../asset/images/33.png";
 import img34 from "../asset/images/34.png";
 import img35 from "../asset/images/35.png";
 
-
 export const LowPrices = [
   {
     id: 1,
@@ -575,6 +574,7 @@ export const languages = {
     basket: `Savat`,
     InstallmentPayment: `Muddatli to'lov`,
     again: `yana`,
+    logout: "chiqish",
     types: {
       electronics: "Elektronika",
       appliances: "Oshxona uchun texnika",
@@ -601,6 +601,7 @@ export const languages = {
     basket: `Корзина`,
     InstallmentPayment: `Рассрочка платежа`,
     again: `снова`,
+    logout: "чикиш",
     types: {
       electronics: "Электроника",
       appliances: "Техника для кухни",
@@ -627,6 +628,7 @@ export const languages = {
     basket: `Basket`,
     InstallmentPayment: `Installment payment`,
     again: `again`,
+    logout: "logout",
     types: {
       electronics: "Electronics",
       appliances: "Appliances for the kitchen",
@@ -636,7 +638,6 @@ export const languages = {
       beauty: "Beauty and care",
       health: "Health",
       home: "Home goods",
-      construction: "Construction and repair",
     },
   },
 };

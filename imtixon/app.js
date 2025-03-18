@@ -2,10 +2,11 @@ const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const sequelize = require("./config/databes");
-const venueTypeRoutes = require("./routes/venueTypeRoutes");
-const districkRouter = require("./routes/districkRouter");
-const regionRouter = require("./routes/regionRouter");
 const datasRouter = require("./routes/datasRouter");
+const slideRouter = require("./routes/slideRouter");
+const loginRouter = require("./routes/loginRouter");
+const likedRouter = require("./routes/likedRouter");
+const basketRouter = require("./routes/basketRouter");
 
 const setupSwagger = require("./swagger/swagger");
 dotenv.config();
@@ -19,10 +20,11 @@ app.use(
   })
 );
 
-app.use("/api", venueTypeRoutes);
-app.use("/api", regionRouter);
-app.use("/api", districkRouter);
 app.use("/api", datasRouter);
+app.use("/api", slideRouter);
+app.use("/api", loginRouter);
+app.use("/api", likedRouter);
+app.use("/api", basketRouter);
 
 setupSwagger(app);
 

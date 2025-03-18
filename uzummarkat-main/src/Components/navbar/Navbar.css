@@ -293,3 +293,39 @@ li {
     background-color: #dee0e5;
   }
 }
+.user-menu {
+  position: relative;
+  display: inline-block;
+}
+
+.user-name {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background: white;
+  border: 1px solid #ccc;
+  padding: 10px 15px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  min-width: 150px;
+  text-align: center;
+}
+
+.dropdown-menu button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: red;
+  padding: 8px 12px;
+  width: 100%;
+}

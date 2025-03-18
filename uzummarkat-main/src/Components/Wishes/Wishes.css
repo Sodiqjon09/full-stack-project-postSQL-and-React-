@@ -3,5 +3,9 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
+  gap: 50px;
+}
+.loginRoute {
+  background: #7f4dff;
+  color: #fff;
 }
