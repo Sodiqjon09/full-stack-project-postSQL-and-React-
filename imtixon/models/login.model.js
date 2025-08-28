@@ -28,6 +28,19 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  
+  Login.associate = (models) => {
+    Login.hasMany(models.basket, {
+      foreignKey: "data_id",
+      as: "basket",
+    });
+    Login.hasMany(models.basket, {
+      foreignKey: "user_id",
+      as: "basket",
+    });
+    Login.hasMany(models.liked, {
+      foreignKey: "user_id",
+      as: "liked",
+    });
+  };
   return Login;
 };

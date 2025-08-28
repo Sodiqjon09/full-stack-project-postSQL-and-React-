@@ -13,6 +13,7 @@ function Suggestion() {
   const [basketItems, setBasketItems] = useState(
     JSON.parse(localStorage.getItem("BasketItems")) || {}
   );
+  
   const [user, setUser] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
@@ -20,7 +21,6 @@ function Suggestion() {
   const currentLanguage = languages[language] || languages["uzb"];
   const basketProduct = Object.values(basketItems);
 
-  // 🔹 Foydalanuvchi ma'lumotlarini olish
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     if (storedUser) {
@@ -28,12 +28,11 @@ function Suggestion() {
     }
   }, []);
 
-  // 🔹 Logout funksiyasi
   const handleLogout = () => {
-    localStorage.removeItem("user"); // LocalStorage dan o'chirish
-    setUser(null); // State ni yangilash
-    setDropdownOpen(false); // Dropdownni yopish
-    navigate("/home"); // Login sahifasiga yo‘naltirish
+    localStorage.removeItem("user");
+    setUser(null);
+    setDropdownOpen(false);
+    navigate("/home");
   };
 
   return (

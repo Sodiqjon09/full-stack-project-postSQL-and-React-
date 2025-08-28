@@ -1,30 +1,29 @@
-const { Basket } = require("../models");
+const { Basket, Datas, Login } = require("../models");
 const { validateBasket } = require("../validations/basketValidation");
 
 exports.creatBasketype = async (req, res) => {
   const { error } = validateBasket(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+
+  if (error) {
+    console.error("Validation xatosi:", error.details[0].message);
+    return res.status(400).json({ error: error.details[0].message });
+  }
 
   try {
-    const existingLiked = await Basket.findOne({
-      where: { basket_id: req.body.basket_id },
-    });
-    if (existingLiked) {
-      return res.status(400).json({ message: "Bu basket_id allaqachon mavjud!" });
-    }
-
-    // Yangi liked qo‘shish
-    const newLiked = await Basket.create(req.body);
-    res.status(201).send(newLiked);
+    const newBasket = await Basket.create(req.body);
+    res.status(201).json(newBasket);
   } catch (error) {
-    console.error("Error creating liked:", error);
-    res.status(500).send(error);
+    console.error("Error creating basket:", error);
+    res.status(500).json({ error: "Ichki server xatosi" });
   }
 };
 
 exports.getBasketType = async (req, res) => {
   try {
-    const basket = await Basket.findAll();
+    const userId = req.query.user_id;
+    const whereClause = userId ? { where: { user_id: userId } } : {};
+
+    const basket = await Basket.findAll(whereClause);
     res.status(200).send(basket);
   } catch (error) {
     res.status(500).send(error);
@@ -36,8 +35,12 @@ exports.getBasketTypeById = async (req, res) => {
     const basket = await Basket.findByPk(req.params.id, {
       include: [
         {
-          model: basket,
-          as: "basket_data",
+          model: Datas,
+          as: "datas",
+        },
+        {
+          model: Login,
+          as: "login",
         },
       ],
     });
@@ -63,19 +66,22 @@ exports.updateBasketType = async (req, res) => {
 
 exports.deleteBasketType = async (req, res) => {
   try {
-    const { id } = req.params; // data_id keladi
+    const { id } = req.params;
 
-    // `data_id` bo‘yicha qidirish
-    const BasketItem = await Basket.findOne({ where: { basket_id: id } });
+    console.log("Kelgan ID:", id); // Debug uchun
 
-    if (!BasketItem) {
-      return res.status(404).json({ message: "BasketItem item not found" });
+    const basketItem = await Basket.findByPk(id); // ID bo‘yicha qidiring
+
+    if (!basketItem) {
+      return res
+        .status(404)
+        .json({ message: "Savatda bunday mahsulot topilmadi" });
     }
 
-    await BasketItem.destroy();
+    await basketItem.destroy();
     return res.status(204).send();
   } catch (error) {
-    console.error("Error deleting BasketItem item:", error);
-    return res.status(500).json({ message: "Server error" });
+    console.error("Basket o'chirishda xato:", error);
+    return res.status(500).json({ message: "Server xatosi" });
   }
 };

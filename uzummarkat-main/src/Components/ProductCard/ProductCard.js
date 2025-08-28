@@ -24,10 +24,9 @@ const ProductCard = ({ product, isLiked, toggleLike, toggleBasket }) => {
           <span id="fake-price">{product.fakePrice}</span>
           <span id="actual-price">{product.price}</span>
         </div>
-        <TbBasketPlus
-          onClick={handleAddToBasket}
-          style={{ cursor: "pointer" }}
-        />
+        <div className="image">
+          <TbBasketPlus onClick={handleAddToBasket} size={22} color="#000" />
+        </div>
       </div>
     </div>
   );

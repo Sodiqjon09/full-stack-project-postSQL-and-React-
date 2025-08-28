@@ -13,14 +13,29 @@ function Bottombar() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/datas");
-        const result = await response.json();
+        const [datasResponse, categoriesResponse] = await Promise.all([
+          fetch("http://localhost:3000/api/datas"),
+          fetch("http://localhost:3000/api/category"),
+        ]);
 
-        // Har bir kategoriya bo‘yicha faqat bitta mahsulotni olish
+        const datas = await datasResponse.json();
+        const categoryList = await categoriesResponse.json();
+
+        // category obyektini id bo'yicha xaritada saqlaymiz
+        const categoryMap = {};
+        categoryList.forEach((cat) => {
+          categoryMap[cat.id] = cat.categoryName;
+        });
+
+        // `datas` dan unikal kategoriyalarni olish
         const uniqueCategories = {};
-        result.forEach((item) => {
+        datas.forEach((item) => {
+          const categoryName = categoryMap[item.category] || "Noma'lum";
           if (!uniqueCategories[item.category]) {
-            uniqueCategories[item.category] = item;
+            uniqueCategories[item.category] = {
+              id: item.category,
+              name: categoryName,
+            };
           }
         });
 
@@ -45,11 +60,11 @@ function Bottombar() {
         {categories.map((category) => (
           <Link
             key={category.id}
-            to={category.category}
+            to={`category-${category.id}`}
             smooth={true}
             duration={500}
           >
-            {category.category}
+            {category.name}
           </Link>
         ))}
       </div>

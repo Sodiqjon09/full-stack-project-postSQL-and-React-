@@ -7,6 +7,7 @@ const slideRouter = require("./routes/slideRouter");
 const loginRouter = require("./routes/loginRouter");
 const likedRouter = require("./routes/likedRouter");
 const basketRouter = require("./routes/basketRouter");
+const categoryRouter = require("./routes/categoryRouter");
 
 const setupSwagger = require("./swagger/swagger");
 dotenv.config();
@@ -25,6 +26,7 @@ app.use("/api", slideRouter);
 app.use("/api", loginRouter);
 app.use("/api", likedRouter);
 app.use("/api", basketRouter);
+app.use("/api", categoryRouter);
 
 setupSwagger(app);
 

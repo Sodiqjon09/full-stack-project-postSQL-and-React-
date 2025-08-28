@@ -9,7 +9,7 @@ const validateData = (data) => {
     credit: Joi.string().required(),
     fakePrice: Joi.string().required(),
     price: Joi.string().required(),
-    category: Joi.string().required(),
+    category: Joi.number().required(),
   });
 
   return schema.validate(data);

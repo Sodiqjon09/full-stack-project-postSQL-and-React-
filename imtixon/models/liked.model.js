@@ -7,8 +7,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     data_id: {
       type: DataTypes.INTEGER,
-      unique: true, // numberId faqat noyob qiymatlarni qabul qiladi
-      allowNull: false,
+    },
+    user_id: {
+      type: DataTypes.INTEGER,
     },
   });
 
@@ -16,6 +17,10 @@ module.exports = (sequelize, DataTypes) => {
     Liked.belongsTo(models.datas, {
       foreignKey: "data_id",
       as: "liked_data",
+    });
+    Liked.belongsTo(models.login, {
+      foreignKey: "user_id",
+      as: "login",
     });
   };
 

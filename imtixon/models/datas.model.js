@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     category: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
   });
@@ -44,12 +44,13 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "data_id",
       as: "liked",
     });
-  };
-  
-  Datas.associate = (models) => {
-    Datas.hasMany(models.liked, {
-      foreignKey: "basket_id",
+    Datas.hasMany(models.basket, {
+      foreignKey: "data_id",
       as: "basket",
+    });
+    Datas.hasMany(models.category, {
+      foreignKey: "category_id",
+      as: "category_data",
     });
   };
 

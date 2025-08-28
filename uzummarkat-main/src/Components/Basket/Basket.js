@@ -11,7 +11,9 @@ export default function Basket() {
   const [data, setData] = useState([]);
   const [basketItems, setBasketItems] = useState([]);
 
-  // Mahsulotlar ro‘yxatini olish
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userId = user?.id;
+
   useEffect(() => {
     fetch("http://localhost:3000/api/datas")
       .then((response) => response.json())
@@ -19,221 +21,124 @@ export default function Basket() {
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
-  // Savatdagi mahsulotlarni API orqali olish
   useEffect(() => {
+    if (!userId) return;
+
     fetch("http://localhost:3000/api/basket")
       .then((response) => response.json())
       .then((basketData) => {
-        setBasketItems(basketData);
+        setBasketItems(basketData.filter((item) => item.user_id === userId));
       })
       .catch((error) => console.error("Error fetching basket items:", error));
-  }, []);
+  }, [userId]);
 
-  // Savatdagi mahsulotlar bo‘yicha filter
   const basketProduct = data.filter((product) =>
-    basketItems.some((item) => item.basket_id === product.id)
+    basketItems.some((item) => item.data_id === product.id)
   );
 
-  // Mahsulotni savatdan o‘chirish
-  const deleteItems = async (id) => {
-    try {
-      const response = await fetch(`http://localhost:3000/api/basket/${id}`, {
-        method: "DELETE",
-      });
-
-      if (!response.ok)
-        throw new Error("Mahsulotni o‘chirishda xatolik yuz berdi");
-
-      setBasketItems((prev) => prev.filter((item) => item.basket_id !== id));
-
-      toast.error("Mahsulot savatdan o'chirildi", {
-        position: "top-center",
-        autoClose: 1500,
-        theme: "colored",
-      });
-    } catch (error) {
-      console.error("Error deleting item:", error);
+  const removeFromBasket = (productId) => {
+    const basketItem = basketItems.find((item) => item.data_id === productId);
+    if (!basketItem) {
+      toast.error("Mahsulot topilmadi!");
+      return;
     }
-  };
 
-  // Mahsulot miqdorini oshirish
-  const increaseQuantity = async (id) => {
-    try {
-      const response = await fetch(`http://localhost:3000/api/basket/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ quantity: 1 }), // 1 qo‘shiladi
+    fetch(`http://localhost:3000/api/basket/${basketItem.id}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (response.ok) {
+          setBasketItems(
+            basketItems.filter((item) => item.id !== basketItem.id)
+          );
+          toast.success("Mahsulot savatdan olib tashlandi");
+        } else {
+          toast.error("Mahsulotni olib tashlashda xatolik yuz berdi");
+        }
+      })
+      .catch((error) => {
+        console.error("Error deleting product:", error);
+        toast.error("Tarmoq xatosi! Mahsulotni olib tashlab bo‘lmadi");
       });
-
-      if (!response.ok)
-        throw new Error("Mahsulot miqdorini oshirishda xatolik");
-
-      setBasketItems((prev) =>
-        prev.map((item) =>
-          item.basket_id === id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        )
-      );
-    } catch (error) {
-      console.error("Error increasing quantity:", error);
-    }
   };
 
-  // Mahsulot miqdorini kamaytirish
-  const decreaseQuantity = async (id) => {
-    const item = basketItems.find((item) => item.basket_id === id);
-    if (!item || item.quantity <= 1) return;
-
-    try {
-      const response = await fetch(`http://localhost:3000/api/basket/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ quantity: -1 }), // 1 kamaytiriladi
-      });
-
-      if (!response.ok)
-        throw new Error("Mahsulot miqdorini kamaytirishda xatolik");
-
-      setBasketItems((prev) =>
-        prev.map((item) =>
-          item.basket_id === id
-            ? { ...item, quantity: item.quantity - 1 }
-            : item
-        )
-      );
-    } catch (error) {
-      console.error("Error decreasing quantity:", error);
-    }
+  // Narxlarni son qilib olish
+  const parsePrice = (priceString) => {
+    if (!priceString) return 0;
+    return parseInt(priceString.replace(/\D/g, ""), 10) || 0;
   };
 
-  // Jami narxni hisoblash
-  const totalPrice = basketProduct.reduce((sum, product) => {
-    const priceNum = parseInt(product.price.replace(/\D/g, ""), 10);
-    const item = basketItems.find((item) => item.basket_id === product.id);
-    return sum + priceNum * (item?.quantity ?? 1);
-  }, 0);
-
-  // Jami fake narxni hisoblash
-  const totalFakePrice = basketProduct.reduce((sum, product) => {
-    const fakePriceNum = parseInt(product.fakePrice.replace(/\D/g, ""), 10);
-    const item = basketItems.find((item) => item.basket_id === product.id);
-    return sum + fakePriceNum * (item?.quantity ?? 1);
-  }, 0);
-
-  // Xatolik toasti
-  const What = () => {
-    toast.warning(
-      "Kechirasiz, mahsulotni sotib olish vaqtinchalik mumkin emas",
-      {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        theme: "light",
-      }
-    );
-  };
+  // Jami hisoblash
+  const totalPrice = basketProduct.reduce(
+    (sum, p) => sum + parsePrice(p.fakePrice || p.price),
+    0
+  );
 
   return (
-    <div className="bigProduct">
+    <div className="basket-container">
       <Navbar />
-      <div className="product-card">
-        <ToastContainer />
-
-        {basketProduct.length > 0 ? (
-          <div className="basket">
-            <div>
-              <div className="header">
-                <div className="delivery-date">
-                  Yetkazib berishning eng yaqin sanasi:{" "}
-                  <span className="highlight">9 - 12-mart</span>
-                </div>
-              </div>
-              <div className="delivery-info">
-                <p>Uzum Market omborida</p>
-                <p className="highlight">9-martdan boshlab yetkazamiz</p>
-              </div>
-
-              <div className="flex">
-                <div>
-                  {basketProduct.map((product) => (
-                    <div key={product.id} className="product-details">
-                      <div className="info">
-                        <div className="image-container">
-                          <img src={product.image} alt={product.title} />
-                        </div>
-                        <div>
-                          <h3>{product.title}</h3>
-                          <p className="seller">
-                            Sotuvchi: <span>Unilever</span>
-                          </p>
-                        </div>
-
-                        <div className="quantity-control">
-                          <button onClick={() => decreaseQuantity(product.id)}>
-                            −
-                          </button>
-                          <span className="quantity-display">
-                            {basketItems.find(
-                              (item) => item.basket_id === product.id
-                            )?.quantity ?? 1}
-                          </span>
-                          <button onClick={() => increaseQuantity(product.id)}>
-                            +
-                          </button>
-                        </div>
-
-                        <div className="controls">
-                          <button
-                            className="delete-button"
-                            onClick={() => deleteItems(product.id)}
-                          >
-                            <Trash2 />
-                            Yo'q qilish
-                          </button>
-
-                          <div className="price-section">
-                            <div className="price">
-                              <p className="current">{product.price}</p>
-                              <p className="original">
-                                {product.fakePrice} so'm
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+      <div className="basket-content">
+        <div className="basket-left">
+          <h2 className="basket-title">Savat</h2>
+          {basketProduct.length > 0 ? (
+            <div className="basket-items">
+              {basketProduct.map((product) => (
+                <div key={product.id} className="basket-item">
+                  <img
+                    src={product.image}
+                    alt={product.title}
+                    className="product-image"
+                  />
+                  <div className="product-info">
+                    <h3>{product.title}</h3>
+                    <p className="seller">
+                      Sotuvchi: <span>FreshFinds</span>
+                    </p>
+                    <div className="price-section">
+                      <span className="current">{product.fakePrice}</span>
+                      <span className="original">{product.price}</span>
                     </div>
-                  ))}
-                </div>
-                <div className="order-card">
-                  <h2 className="order-title">Buyurtmangiz</h2>
-
-                  <div className="order-item">
-                    <span>Mahsulotlar ({basketProduct.length}):</span>
-                    <span className="order-price">{totalFakePrice} so'm</span>
                   </div>
-
-                  <div className="order-item order-total">
-                    <span>Jami:</span>
-                    <span className="final-price">{totalPrice} so'm</span>
-                  </div>
-
-                  <button onClick={() => What()} className="order-button">
-                    Rasmiylashtirishga oʻtish
+                  <button
+                    onClick={() => removeFromBasket(product.id)}
+                    className="delete-button"
+                  >
+                    <Trash2 />
                   </button>
                 </div>
-              </div>
+              ))}
             </div>
-          </div>
-        ) : (
-          <div className="savat">
-            <h1>Savatingiz hozircha bo‘sh</h1>
-            <Link to="/home">Bosh sahifa</Link>
+          ) : (
+            <div className="empty-basket">
+              <h1 className="empty-basket-message">
+                Savatingiz hozircha bo‘sh
+              </h1>
+              <Link to="/home" className="back-to-home">
+                Bosh sahifa
+              </Link>
+            </div>
+          )}
+        </div>
+
+        {/* O‘ng tomondagi jami hisob */}
+        {basketProduct.length > 0 && (
+          <div className="basket-summary">
+            <h3>Buyurtmangiz</h3>
+            <p>Mahsulotlar soni: {basketProduct.length} ta</p>
+            <p>
+              Jami:{" "}
+              <span className="summary-total">
+                {totalPrice.toLocaleString()} so'm
+              </span>
+            </p>
+            <button className="checkout-button">
+              Rasmiylashtirishga o‘tish
+            </button>
           </div>
         )}
       </div>
       <Footer />
+      <ToastContainer />
     </div>
   );
 }

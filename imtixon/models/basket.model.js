@@ -5,17 +5,22 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       primaryKey: true,
     },
-    basket_id: {
+    data_id: {
       type: DataTypes.INTEGER,
-      unique: true,
-      allowNull: false,
+    },
+    user_id: {
+      type: DataTypes.INTEGER,
     },
   });
 
   Basket.associate = (models) => {
     Basket.belongsTo(models.datas, {
-      foreignKey: "basket_id",
-      as: "basket_data",
+      foreignKey: "data_id",
+      as: "datas",
+    });
+    Basket.belongsTo(models.login, {
+      foreignKey: "user_id",
+      as: "login",
     });
   };
 

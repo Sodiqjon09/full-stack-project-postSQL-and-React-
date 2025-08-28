@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Login from "./Components/login/Login";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Home from "./Components/Home/Home";
@@ -8,11 +8,15 @@ import { LanguageProvider } from "./LanguageSelector"; // Import the LanguagePro
 import Basket from "./Components/Basket/Basket";
 
 function App() {
+  useEffect(() => {
+    fetch("http://localhost:3000/api/basket").then((response) =>
+      response.json().then((data) => console.log(data))
+    );
+  }, []);
   return (
     <LanguageProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />

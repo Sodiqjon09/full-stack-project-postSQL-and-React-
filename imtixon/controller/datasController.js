@@ -23,7 +23,7 @@ exports.getDataType = async (req, res) => {
 };
 
 exports.getDataTypeById = async (req, res) => {
-  try {b
+  try {
     const datas = await Datas.findByPk(req.params.id, {
       //   includes: [
       //     {

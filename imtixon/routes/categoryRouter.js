@@ -1,20 +1,19 @@
 const express = require("express");
 const router = express.Router();
-const basketController = require("../controller/basketController");
-
+const categoeyController = require("../controller/categoeyController");
 /**
  * @swagger
  * tags:
- *   name: basket
- *   description: basket management
+ *   name: category
+ *   description: category category
  */
 
 /**
  * @swagger
- * /api/basket:
+ * /api/category:
  *   post:
- *     tags: [basket]
- *     summary: Create a new basket
+ *     tags: [category]
+ *     summary: Create a new category
  *     requestBody:
  *       required: true
  *       content:
@@ -22,73 +21,71 @@ const basketController = require("../controller/basketController");
  *           schema:
  *             type: object
  *             properties:
- *               data_id:
- *                 type: number
- *               user_id:
- *                 type: number
+ *               categoryName:
+ *                 type: string
  *     responses:
  *       201:
- *         description: number created
+ *         description: category created
  *       400:
  *         description: Invalid input
  *       500:
  *         description: Server error
  */
-router.post("/basket", basketController.creatBasketype);
+router.post("/category", categoeyController.createCategoryType);
 
 /**
  * @swagger
- * /api/basket:
+ * /api/category:
  *   get:
- *     tags: [basket]
- *     summary: Get all basket
+ *     tags: [category]
+ *     summary: Get all category
  *     responses:
  *       200:
- *         description: List of basket
+ *         description: List of category
  *       500:
  *         description: Server error
  */
 
-router.get("/basket", basketController.getBasketType);
+router.get("/category", categoeyController.getCategoryType);
 /**
  * @swagger
- * /api/basket/{id}:
+ * /api/category/{id}:
  *   get:
- *     tags: [basket]
- *     summary: Update user by basket
+ *     tags: [category]
+ *     summary: Update user by category
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: integer
  *         required: true
- *         description: basket ID
+ *         description: category ID
  *     responses:
  *       200:
- *         description: basket updated
+ *         description: category updated
  *       400:
  *         description: Invalid input
  *       404:
- *         description: basket not found
+ *         description: category not found
  *       500:
  *         description: Server error
  */
 
-router.get("/basket/:id", basketController.getBasketTypeById);
+router.get("/category/:id", categoeyController.getCategoryTypeById);
 
 /**
  * @swagger
- * /api/basket/{id}:
+ * /api/category/{id}:
  *   put:
- *     tags: [basket]
- *     summary: Update basket by ID
+ *     tags: [category]
+ *     summary: Update category by ID
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: integer
  *         required: true
- *         description: datas ID
+ *         description: category ID
  *     requestBody:
  *       required: true
  *       content:
@@ -96,42 +93,40 @@ router.get("/basket/:id", basketController.getBasketTypeById);
  *           schema:
  *             type: object
  *             properties:
- *               data_id:
- *                 type: number
- *               user_id:
- *                 type: number
+ *               categoryName:
+ *                 type: string
  *     responses:
  *       200:
- *         description: datas updated
+ *         description: category updated
  *       400:
  *         description: Invalid input
  *       404:
- *         description: datas not found
+ *         description: category not found
  *       500:
  *         description: Server error
  */
-router.put("/basket/:id", basketController.updateBasketType);
+router.put("/category/:id", categoeyController.updateCategoryType);
 /**
  * @swagger
- * /api/basket/{id}:
+ * /api/category/{id}:
  *   delete:
- *     tags: [basket]
- *     summary: Delete basket by ID
+ *     tags: [category]
+ *     summary: Delete category by ID
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: integer
  *         required: true
- *         description: basket ID
+ *         description: category ID
  *     responses:
  *       204:
- *         description: basket deleted
+ *         description: category deleted
  *       404:
- *         description: basket not found
+ *         description: category not found
  *       500:
  *         description: Server error
  */
 
-router.delete("/basket/:id", basketController.deleteBasketType);
+router.delete("/category/:id", categoeyController.deleteCategoryType);
 module.exports = router;

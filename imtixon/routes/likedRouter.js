@@ -23,6 +23,8 @@ const likedController = require("../controller/likedController");
  *             properties:
  *               data_id:
  *                 type: number
+ *               user_id:
+ *                 type: number
  *     responses:
  *       201:
  *         description: number created
@@ -94,6 +96,8 @@ router.get("/liked/:id", likedController.getLikedTypeById);
  *             type: object
  *             properties:
  *               data_id:
+ *                 type: number
+ *               user_id:
  *                 type: number
  *     responses:
  *       200:

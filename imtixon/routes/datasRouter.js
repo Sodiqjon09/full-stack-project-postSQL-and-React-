@@ -36,7 +36,7 @@ const datasController = require("../controller/datasController");
  *               price:
  *                 type: string
  *               category:
- *                 type: string
+ *                 type: number
  *     responses:
  *       201:
  *         description: datas created
@@ -122,7 +122,7 @@ router.get("/datas/:id", datasController.getDataTypeById);
  *               price:
  *                 type: string
  *               category:
- *                 type: string
+ *                 type: number
  *     responses:
  *       200:
  *         description: datas updated
